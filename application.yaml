@@ -11,3 +11,8 @@ spec:
     path: overlay
     repoURL: https://github.com/seizaemon/test-divide-argocd.git
     targetRevision: HEAD
+  syncPolicy:
+    automated:
+      prune: true
+    syncOptions:
+      - CreateNamespace=true
