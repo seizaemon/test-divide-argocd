@@ -34,4 +34,6 @@ argocd cluster --kubeconfig ~/.config/minikube_config add prod-cluster
 
 - 元クラスタはapp of appsになっているのでそのように組み替え
   - めんどくさいけどリポジトリをつくってテストするか・・・
-  - 
+
+
+## 認証

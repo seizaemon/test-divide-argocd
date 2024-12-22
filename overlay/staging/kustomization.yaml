@@ -8,6 +8,8 @@ labels:
   - pairs:
       env: staging
 
+nameSuffix: -staging
+
 patches:
 - patch: |-
     - op: replace

@@ -8,6 +8,8 @@ labels:
   - pairs:
       env: test
 
+nameSuffix: -test
+
 patches:
 - patch: |-
     - op: replace
