@@ -6,12 +6,12 @@ resources:
 
 labels:
   - pairs:
-      env: test
+      env: staging
 
 patches:
 - patch: |-
     - op: replace
       path: /spec/destination/server
-      value: https://kubernetes.default.svc
+      value: https://192.168.254.20:8443
   target:
     kind: Application
