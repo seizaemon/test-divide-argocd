@@ -1,0 +1,107 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: test-apps
+  namespace: argocd
+spec:
+  goTemplate: true
+  goTemplateOptions: ["missingkey=error"]
+  generators:
+    - list:
+        elements:
+          - appname: external-secrets
+            url: https://charts.external-secrets.io
+            version: 0.11.0
+          - appname: jenkins
+            url: https://charts.jenkins.io
+            version: 5.7.25
+          - appname: kubernetes-dashboard
+            url: https://kubernetes.github.io/dashboard/
+            version: 7.10.0
+  template:
+    metadata:
+      name: "{{ .appname }}-test"
+    spec:
+      project: default
+      source:
+        chart: "{{ .appname }}"
+        repoURL: "{{ .url }}"
+        targetRevision: "{{ .version }}"
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: "{{ .appname }}"
+      syncPolicy:
+        syncOptions:
+          - CreateNamespace=true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: staging-apps
+  namespace: argocd
+spec:
+  goTemplate: true
+  goTemplateOptions: ["missingkey=error"]
+  generators:
+    - list:
+        elements:
+          - appname: external-secrets
+            url: https://charts.external-secrets.io
+            version: 0.11.0
+          - appname: jenkins
+            url: https://charts.jenkins.io
+            version: 5.7.25
+          - appname: kubernetes-dashboard
+            url: https://kubernetes.github.io/dashboard/
+            version: 7.10.0
+  template:
+    metadata:
+      name: "{{ .appname }}-stg"
+    spec:
+      project: default
+      source:
+        chart: "{{ .appname }}"
+        repoURL: "{{ .url }}"
+        targetRevision: "{{ .version }}"
+      destination:
+        server: https://192.168.254.20:8443
+        namespace: "{{ .appname }}"
+      syncPolicy:
+        syncOptions:
+          - CreateNamespace=true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: prod-apps
+  namespace: argocd
+spec:
+  goTemplate: true
+  goTemplateOptions: ["missingkey=error"]
+  generators:
+    - list:
+        elements:
+          - appname: external-secrets
+            url: https://charts.external-secrets.io
+            version: 0.11.0
+          - appname: jenkins
+            url: https://charts.jenkins.io
+            version: 5.7.25
+          - appname: kubernetes-dashboard
+            url: https://kubernetes.github.io/dashboard/
+            version: 7.10.0
+  template:
+    metadata:
+      name: "{{ .appname }}-prod"
+    spec:
+      project: default
+      source:
+        chart: "{{ .appname }}"
+        repoURL: "{{ .url }}"
+        targetRevision: "{{ .version }}"
+      destination:
+        server: https://192.168.254.30:8443
+        namespace: "{{ .appname }}"
+      syncPolicy:
+        syncOptions:
+          - CreateNamespace=true

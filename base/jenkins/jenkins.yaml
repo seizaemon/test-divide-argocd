@@ -1,0 +1,18 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: jenkins
+  labels:
+    app.kubernetes.io/name: jenkins
+spec:
+  destination:
+    namespace: jenkins
+    server: https://kubernetes.default.svc
+  project: default
+  source: 
+    chart: jenkins
+    repoURL: https://charts.jenkins.io
+    targetRevision: 5.7.25
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
